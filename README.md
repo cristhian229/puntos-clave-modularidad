@@ -85,7 +85,7 @@ Este código configura una conexión a una base de datos utilizando Sequelize y 
 
 Este código define un controlador de autenticación (AuthController) para una aplicación web utilizando Express y TypeScript. El controlador maneja el inicio de sesión y el registro de usuarios, además de generar tokens JWT para la autenticación. Aquí tienes una explicación detallada de lo que está sucediendo:
 
-###Importaciones
+### Importaciones
 
 ```typescript
 import { container } from "tsyringe";
@@ -104,7 +104,7 @@ jsonwebtoken: Se importa jsonwebtoken para generar y verificar tokens JWT.
 UserService: Se importa UserService, que maneja la lógica de negocio relacionada con los usuarios.
 UserType: Se importa UserType para definir el tipo de datos del usuario.
 
-###clase AouthController metodo login
+### clase AouthController metodo login
 
 ```typescript
 static async login(req: Request, res: Response) {
@@ -137,7 +137,7 @@ Si las credenciales no son válidas, devuelve un estado 401 con un mensaje de "I
 Si las credenciales son válidas, genera un token JWT usando el método generateToken.
 Devuelve el token en la respuesta con un estado 200.
 
-###Metodo register
+### Metodo register
 
 ```typescript
 static async register(req: Request, res: Response) {
@@ -165,7 +165,7 @@ Llama al método createUser de UserService para crear un nuevo usuario.
 Devuelve el nuevo usuario en la respuesta con un estado 201.
 Si hay algún error, devuelve un estado 400 con el mensaje de error.
 
-###Metodo generate Token
+### Metodo generate Token
 
 ```typescript
 static generateToken(user: { id: number; username: string }): any {
@@ -382,6 +382,7 @@ price: number: Define un campo price que es de tipo number. Este campo es obliga
 stock: number: Define un campo stock que es de tipo number. Este campo es obligatorio.
 category: string: Define un campo category que es de tipo string. Este campo es obligatorio.
 Propósito de la Interfaz
+
 La interfaz ProductType sirve como un contrato que define qué propiedades debe tener un objeto de producto y qué tipos de datos deben tener estas propiedades. Al usar esta interfaz, TypeScript puede garantizar que los objetos de producto que se usan en la aplicación tengan la forma esperada y contengan los datos necesarios. Esto ayuda a prevenir errores y a mejorar la autocompletación y la documentación en los editores de código.
 
 ## Middlewares
@@ -408,7 +409,7 @@ interface CustomRequest extends Request {
 }
 CustomRequest: Extiende la interfaz Request de Express para incluir una propiedad opcional user. Esto se utiliza para almacenar la información del usuario autenticado.
 
-###Función Middleware authJWT
+### Función Middleware authJWT
 
 ```typescript
 const authJWT = (req: CustomRequest, res: Response, next: NextFunction) => {
@@ -467,7 +468,7 @@ Si el encabezado de autorización no está presente, responde con un estado 401 
 Resumen
 Este middleware authJWT se utiliza para proteger las rutas de la aplicación verificando que la solicitud incluya un token JWT válido en el encabezado de autorización. Si el token es válido, el middleware almacena la información del usuario en la solicitud y permite que la solicitud continúe hacia el siguiente middleware o controlador. Si el token es inválido o falta, responde con el estado HTTP adecuado (401 o 403).
 
-###Función Middleware errorHandler
+### Función Middleware errorHandler
 
 ```typescript
 const errorHandler = (err: any, req: Request, res: Response, next: NextFunction): void => {
@@ -621,7 +622,7 @@ category: Categoría del producto, no nulo.
 userId: Clave foránea que referencia a un usuario en UserModel, no nulo.
 Además, establece una relación de pertenencia con el modelo UserModel, lo que permite acceder a los datos del usuario asociado a cada producto.
 
-##Capa Repositories
+## Capa Repositories
 
 Este código define una clase ProductRepository que actúa como un repositorio para manejar las operaciones de base de datos relacionadas con los productos utilizando Sequelize y TypeScript. La clase está decorada con el decorador @injectable() de tsyringe para permitir la inyección de dependencias. A continuación, se explica cada parte del código:
 
@@ -645,7 +646,7 @@ Copiar código
 export default class ProductRepository {
 ProductRepository: Define la clase ProductRepository que contiene métodos para realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en la tabla products.
 
-###Metodos
+### Metodos
 
 findAll
 
@@ -693,7 +694,7 @@ delete: Elimina un producto de la base de datos. Utiliza el método destroy({ wh
 Resumen
 La clase ProductRepository proporciona una interfaz para interactuar con la tabla products en la base de datos. Utiliza los métodos de Sequelize para realizar operaciones CRUD. Cada método devuelve una promesa que se resuelve con los datos correspondientes o el número de registros afectados. La clase está configurada para ser inyectada en otras partes de la aplicación utilizando tsyringe, lo que facilita la gestión de dependencias y la separación de responsabilidades.
 
-##Capa Routes
+## Capa Routes
 
 Este código configura y exporta un enrutador para una aplicación Express. A continuación, se detalla qué hace cada parte del código:
 
@@ -744,31 +745,34 @@ Este código crea un enrutador de Express que organiza las rutas de la aplicaci�
 /products: Manejado por productRouter y también protegido por el middleware de autenticación JWT (authJWT).
 El enrutador se exporta para su uso en la aplicación principal.
 
-###AuthRouter
+### AuthRouter
 
 Este código define un enrutador para manejar las rutas relacionadas con la autenticación en una aplicación Express. A continuación, se desglosa lo que está ocurriendo:
 
 Importaciones
-typescript
-Copiar código
+
+
+
 import { Router } from "express";
 import AuthController from "../controllers/authController";
 Router: Importa el constructor de enrutadores de Express, utilizado para definir y gestionar rutas en la aplicación.
 AuthController: Importa el controlador AuthController, que contiene la lógica para manejar las solicitudes de autenticación, como el inicio de sesión y el registro de usuarios.
 Configuración del Enrutador
-typescript
-Copiar código
+
+
+
 export const authRouter: Router = Router();
 export const authRouter: Router = Router();: Crea una instancia del enrutador de Express y la exporta. Este enrutador se utilizará para definir las rutas relacionadas con la autenticación.
 Definición de Rutas
-typescript
-Copiar código
+
+
 authRouter.post("/login", AuthController.login);
 authRouter.post("/login", AuthController.login);: Define una ruta POST en /login que utiliza el método login del AuthController para manejar las solicitudes de inicio de sesión. Cuando se recibe una solicitud POST en /login, se invoca el método login del AuthController para procesar la autenticación del usuario.
-typescript
-Copiar código
+
+
 authRouter.post("/register", AuthController.register);
 authRouter.post("/register", AuthController.register);: Define una ruta POST en /register que utiliza el método register del AuthController para manejar las solicitudes de registro de nuevos usuarios. Cuando se recibe una solicitud POST en /register, se invoca el método register del AuthController para crear un nuevo usuario en el sistema.
+
 Resumen
 Este código configura un enrutador para las rutas de autenticación de la aplicación:
 
@@ -781,32 +785,27 @@ El enrutador authRouter se exporta para ser utilizado en otras partes de la apli
 Definición de Rutas
 Obtener todos los productos
 
-typescript
-Copiar código
+
 productRouter.get("/", ProductController.getAllProducts);
 productRouter.get("/", ProductController.getAllProducts);: Define una ruta GET en / (raíz del enrutador de productos) que utiliza el método getAllProducts del ProductController para manejar las solicitudes que obtienen todos los productos.
 Obtener un producto por ID
 
-typescript
-Copiar código
+
 productRouter.get("/:id", ProductController.getProductById);
 productRouter.get("/:id", ProductController.getProductById);: Define una ruta GET en /:id, donde :id es un parámetro de ruta. Utiliza el método getProductById del ProductController para manejar las solicitudes que obtienen un producto específico basado en su ID.
 Crear un nuevo producto
 
-typescript
-Copiar código
+
 productRouter.post("/", ProductController.createProduct);
 productRouter.post("/", ProductController.createProduct);: Define una ruta POST en / que utiliza el método createProduct del ProductController para manejar las solicitudes que crean un nuevo producto.
 Actualizar un producto existente
 
-typescript
-Copiar código
+
 productRouter.put("/:id", ProductController.updateProduct);
 productRouter.put("/:id", ProductController.updateProduct);: Define una ruta PUT en /:id, donde :id es un parámetro de ruta. Utiliza el método updateProduct del ProductController para manejar las solicitudes que actualizan un producto existente basado en su ID.
 Eliminar un producto
 
-typescript
-Copiar código
+
 productRouter.delete("/:id", ProductController.deleteProduct);
 productRouter.delete("/:id", ProductController.deleteProduct);: Define una ruta DELETE en /:id, donde :id es un parámetro de ruta. Utiliza el método deleteProduct del ProductController para manejar las solicitudes que eliminan un producto existente basado en su ID.
 
@@ -844,6 +843,7 @@ Copiar código
 async getAllProducts(): Promise<ProductType[]> {
     return await this.productRepository.findAll();
 }
+
 Llama al método findAll del repositorio para obtener todos los productos.
 getProductById(id: number)
 
@@ -852,6 +852,7 @@ Copiar código
 async getProductById(id: number): Promise<ProductType | null> {
     return await this.productRepository.findById(id);
 }
+
 Llama al método findById del repositorio para obtener un producto específico por su ID.
 createProduct(product: Partial<ProductModel>)
 
@@ -860,6 +861,7 @@ Copiar código
 async createProduct(product: Partial<ProductModel>): Promise<ProductType | null> {
     return await this.productRepository.create(product);
 }
+
 Llama al método create del repositorio para crear un nuevo producto. product es de tipo Partial<ProductModel>, lo que significa que puede no contener todas las propiedades del modelo ProductModel.
 updateProduct(id: number, product: Partial<ProductType>)
 
@@ -868,6 +870,7 @@ Copiar código
 async updateProduct(id: number, product: Partial<ProductType>): Promise<[affectedCount: number]> {
     return await this.productRepository.update(id, product);
 }
+
 Llama al método update del repositorio para actualizar un producto existente por su ID. Devuelve un array con el número de registros afectados.
 deleteProduct(id: number)
 
@@ -876,12 +879,15 @@ Copiar código
 async deleteProduct(id: number): Promise<number> {
     return await this.productRepository.delete(id);
 }
+
 Llama al método delete del repositorio para eliminar un producto por su ID. Devuelve el número de registros eliminados.
 
+
 Resumen
+
 La clase ProductService gestiona la lógica de negocio relacionada con los productos y utiliza ProductRepository para interactuar con la base de datos. Los métodos del servicio delegan las operaciones CRUD al repositorio inyectado, promoviendo una separación de responsabilidades y facilitando la prueba y el mantenimiento del código. La inyección de dependencias con tsyringe permite una gestión más flexible y modular de las dependencias en la aplicación.
 
-##Capa index.ts
+## Capa index.ts
 
 Este código configura y arranca una aplicación Express en Node.js, integrando varias dependencias y configuraciones esenciales. A continuación, se desglosa lo que está ocurriendo:
 

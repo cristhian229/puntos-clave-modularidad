@@ -187,25 +187,27 @@ Devuelve el token.
 
 Este código define un controlador de autenticación (AuthController) que maneja las solicitudes de inicio de sesión y registro de usuarios, utilizando servicios proporcionados por UserService. También incluye la generación de tokens JWT para la autenticación. La configuración de variables de entorno se maneja con dotenv, y la inyección de dependencias se realiza con tsyringe.
 
-### controller product
+### Controller product
 
 Este código define un controlador de productos (ProductController) para una aplicación web utilizando Express y TypeScript. El controlador maneja las operaciones CRUD (Crear, Leer, Actualizar, Eliminar) para los productos mediante el uso de servicios proporcionados por ProductService. Aquí tienes una explicación detallada de lo que está sucediendo en cada parte del código:
 
 Importaciones
-typescript
-Copiar código
+```typescript
+
 import ProductService from "../services/productService";
 import { container } from "tsyringe";
 import { Request, Response } from "express";
 import { ProductType } from "../interfaces/product";
+```
 ProductService: Se importa ProductService que maneja la lógica de negocio relacionada con los productos.
 tsyringe: Se importa el contenedor de inyección de dependencias.
 Express: Se importan Request y Response para manejar solicitudes y respuestas HTTP.
 ProductType: Se importa ProductType para definir el tipo de datos del producto.
 Clase ProductController
+
 Método getAllProducts
-typescript
-Copiar código
+
+```typescript
 static async getAllProducts(req: Request, res: Response) {
     try {
         const productService: ProductService = container.resolve(ProductService);
@@ -221,15 +223,18 @@ static async getAllProducts(req: Request, res: Response) {
         });
     }
 }
+```
 Descripción: Este método maneja la obtención de todos los productos.
 Proceso:
 Resuelve la instancia de ProductService usando tsyringe.
 Llama al método getAllProducts de ProductService para obtener todos los productos.
 Devuelve los productos en la respuesta con un estado 200.
 Si hay un error, devuelve un estado 500 con el mensaje de error.
+
 Método getProductById
-typescript
-Copiar código
+
+```typescript
+
 static async getProductById(req: Request, res: Response) {
     try {
         const productService: ProductService = container.resolve(ProductService);
@@ -253,6 +258,7 @@ static async getProductById(req: Request, res: Response) {
         });
     }
 }
+```
 Descripción: Este método maneja la obtención de un producto por su ID.
 Proceso:
 Resuelve la instancia de ProductService usando tsyringe.
@@ -261,9 +267,11 @@ Llama al método getProductById de ProductService para obtener el producto.
 Si el producto no se encuentra, devuelve un estado 404 con un mensaje de "Product not found".
 Si se encuentra, devuelve el producto en la respuesta con un estado 200.
 Si hay un error, devuelve un estado 500 con el mensaje de error.
+
 Método createProduct
-typescript
-Copiar código
+
+```typescript
+
 static async createProduct(req: Request, res: Response) {
     try {
         const productService: ProductService = container.resolve(ProductService);
@@ -280,6 +288,7 @@ static async createProduct(req: Request, res: Response) {
         });
     }
 }
+```
 Descripción: Este método maneja la creación de un nuevo producto.
 Proceso:
 Resuelve la instancia de ProductService usando tsyringe.
@@ -287,9 +296,11 @@ Extrae el producto del cuerpo de la solicitud (req.body).
 Llama al método createProduct de ProductService para crear el nuevo producto.
 Devuelve el nuevo producto en la respuesta con un estado 201.
 Si hay un error, devuelve un estado 500 con el mensaje de error.
+
 Método updateProduct
-typescript
-Copiar código
+
+```typescript
+
 static async updateProduct(req: Request, res: Response) {
     const productService: ProductService = container.resolve(ProductService);
     const id: number = parseInt(req.params.id);
@@ -314,6 +325,7 @@ static async updateProduct(req: Request, res: Response) {
         });
     }
 }
+```
 Descripción: Este método maneja la actualización de un producto existente.
 Proceso:
 Resuelve la instancia de ProductService usando tsyringe.
@@ -323,9 +335,11 @@ Llama al método updateProduct de ProductService para actualizar el producto.
 Si no se afecta ningún producto (producto no encontrado), devuelve un estado 404 con un mensaje de "Product not found".
 Si se actualiza correctamente, devuelve un mensaje de éxito con un estado 200.
 Si hay un error, devuelve un estado 500 con el mensaje de error.
+
 Método deleteProduct
-typescript
-Copiar código
+
+```typescript
+
 static async deleteProduct(req: Request, res: Response) {
     const productService: ProductService = container.resolve(ProductService);
     const id: number = parseInt(req.params.id);
@@ -349,6 +363,7 @@ static async deleteProduct(req: Request, res: Response) {
         });
     }
 }
+```
 Descripción: Este método maneja la eliminación de un producto existente.
 Proceso:
 Resuelve la instancia de ProductService usando tsyringe.
@@ -360,7 +375,7 @@ Si hay un error, devuelve un estado 500 con el mensaje de error.
 Resumen
 Este código define un controlador de productos (ProductController) que maneja las solicitudes CRUD para los productos utilizando servicios proporcionados por ProductService. La inyección de dependencias se realiza con tsyringe, y las respuestas HTTP se manejan con Express.
 
-##Capa Interfaces
+## Capa Interfaces
 
 Este código define una interfaz de TypeScript llamada ProductType, que especifica la estructura de un objeto de producto en la aplicación. Una interfaz en TypeScript es una forma de definir la forma y los tipos de datos que un objeto debe tener. Aquí está la explicación de cada parte de la interfaz:
 
